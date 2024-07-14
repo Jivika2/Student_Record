@@ -2,11 +2,11 @@
 <odoo>
     <report 
         id="student_id_card_report"
-        model="student.record"
+        model="student.management"
         string="Student ID Card"
         report_type="qweb-pdf"
-        name="student_records.student_id_card_template"
-        file="student_records.student_id_card_template"
+        name="student_management.student_id_card_template"
+        file="student_management.student_id_card_template"
         print_report_name="'Student ID Card - %s' % (object.name)"
     />
     

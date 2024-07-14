@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <report 
+        id="student_id_card_report"
+        model="student.record"
+        string="Student ID Card"
+        report_type="qweb-pdf"
+        name="student_records.student_id_card_template"
+        file="student_records.student_id_card_template"
+        print_report_name="'Student ID Card - %s' % (object.name)"
+    />
+    
+    <template id="student_id_card_template">
+        <t t-call="web.basic_layout">
+            <div class="page">
+                <h2>Student ID Card</h2>
+                <p><strong>Name:</strong> <span t-field="doc.name"/></p>
+                <p><strong>Student Number:</strong> <span t-field="doc.student_number"/></p>
+                <p><strong>Age:</strong> <span t-field="doc.age"/></p>
+            </div>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_student_user,access_student_user,model_student_management,group_user,1,1,1,1
+access_student_manager,access_student_manager,model_student_management,group_manager,1,1,1,1
+access_student_record_history_user,access_student_record_history_user,model_student_record_history,base.group_user,1,1,1,1
+access_student_record_history_manager,access_student_record_history_manager,model_student_record_history,base.group_system,1,1,1,1

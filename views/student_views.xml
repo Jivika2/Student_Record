@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_student_form" model="ir.ui.view">
+        <field name="name">student.management.form</field>
+        <field name="model">student.management</field>
+        <field name="arch" type="xml">
+            <form string="Student Management">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="sequence"/>
+                        <field name="birthdate"/>
+                        <field name="age"/>
+                        <field name="gender"/>
+                        <field name="address"/>
+                    </group>
+                    <footer>
+                        <button name="print_student_id_card" type="object" string="Print ID Card" class="oe_highlight"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="view_student_tree" model="ir.ui.view">
+        <field name="name">student.management.tree</field>
+        <field name="model">student.management</field>
+        <field name="arch" type="xml">
+            <tree string="Student Management">
+                <field name="name"/>
+                <field name="sequence"/>
+                <field name="birthdate"/>
+                <field name="age"/>
+                <field name="gender"/>
+                <field name="address"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_student_search" model="ir.ui.view">
+        <field name="name">student.management.search</field>
+        <field name="model">student.management</field>
+        <field name="arch" type="xml">
+            <search string="Search Students">
+                <field name="name"/>
+                <field name="sequence"/>
+                <field name="birthdate"/>
+                <field name="age"/>
+                <field name="gender"/>
+                <field name="address"/>
+                <filter string="Male" name="gender_male" domain="[('gender', '=', 'male')]"/>
+                <filter string="Female" name="gender_female" domain="[('gender', '=', 'female')]"/>
+            </search>
+        </field>
+    </record>
+
+    
+    <record id="action_student" model="ir.actions.act_window">
+        <field name="name">Students</field>
+        <field name="res_model">student.management</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+  
+    <menuitem id="menu_student_management" name="Student Management" sequence="10" parent="base.menu_custom"/>
+    <menuitem id="menu_student" parent="menu_student_management" action="action_student" name="Students" sequence="10"/>
+
+   
+    <record id="student_id_card_report" model="ir.actions.report">
+        <field name="name">Student ID Card</field>
+        <field name="model">student.management</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">student_management.student_id_card_template</field>
+        <field name="report_file">student_management.student_id_card_template</field>
+    </record>
+</odoo>

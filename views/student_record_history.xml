@@ -1,0 +1,53 @@
+<odoo>
+    <data>
+        <!-- Form View -->
+        <record id="view_form_student_record_history" model="ir.ui.view">
+            <field name="name">student.record.history.form</field>
+            <field name="model">student.record.history</field>
+            <field name="arch" type="xml">
+                <form string="Student Record History">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="student_id"/>
+                                <field name="field_name"/>
+                            </group>
+                            <group>
+                                <field name="old_value"/>
+                                <field name="new_value"/>
+                                <field name="change_date"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Tree View -->
+        <record id="view_tree_student_record_history" model="ir.ui.view">
+            <field name="name">student.record.history.tree</field>
+            <field name="model">student.record.history</field>
+            <field name="arch" type="xml">
+                <tree string="Student Record History">
+                    <field name="student_id"/>
+                    <field name="field_name"/>
+                    <field name="old_value"/>
+                    <field name="new_value"/>
+                    <field name="change_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_student_record_history" model="ir.actions.act_window">
+            <field name="name">Student Record History</field>
+            <field name="res_model">student.record.history</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Track and manage student record changes here.
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

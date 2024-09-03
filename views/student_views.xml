@@ -1,28 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-    <record id="view_student_form" model="ir.ui.view">
-        <field name="name">student.management.form</field>
-        <field name="model">student.management</field>
-        <field name="arch" type="xml">
-            <form string="Student Management">
-                <sheet>
+
+    <!-- Form Views -->
+    <record id="view_form_student_management" model="ir.ui.view">
+    <field name="name">student.management.form</field>
+    <field name="model">student.management</field>
+    <field name="arch" type="xml">
+        <form string="Student">
+            <header>
+                <button name="print_student_id_card" type="object" string="Print ID Card" class="btn btn-primary"/>
+                <field name="student_id_card" widget="binary" filename="name" invisible="1"/>
+            </header>
+            <sheet>
+
+                <div class="oe_button_box" name="button_box">
+                    <button class="oe_stat_button" name="website_publish_button" type="object" icon="fa-globe">
+                        <field name="is_published" widget="website_publish_button"/>
+                    </button>
+                    <button class="oe_stat_button" name="action_view_history" type="object" icon="fa-handshake-o">
+                        <field name="history_count" string="History" widget="statinfo"/>
+                    </button>
+                </div>
+                <group>
+                    <field name="name"/>
+                    <field name="sequence" readonly="1"/>
                     <group>
-                        <field name="name"/>
-                        <field name="sequence"/>
                         <field name="birthdate"/>
-                        <field name="age"/>
+                        <field name="age" readonly="1"/>
                         <field name="gender"/>
+                    </group>
+                    <group>
+                        <field name="department_id"/>
                         <field name="address"/>
                     </group>
-                    <footer>
-                        <button name="print_student_id_card" type="object" string="Print ID Card" class="oe_highlight"/>
-                    </footer>
-                </sheet>
-            </form>
-        </field>
-    </record>
+                    <notebook>
+                        <page string="Description">
+                            <field name="description"/>
+                        </page>
+                        <page string="ID Card">
+                            <group>
+                                <field name="name"/>
+                                <field name="age"/>
+                                <field name="address"/>
+                                <field name="gender"/>
+                                <field name="department_id"/>
+                            </group>
+                        </page>
+                        <page string="Department">
+                            <!-- Display the related department fields, no need to use nested form here -->
+                            <field name="department_id">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="code"/>
+                                    <field name="manager_id"/>
+                                    <field name="description"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </group>
+            </sheet>
+            <div class="oe_chatter">
+                <field name="message_follower_ids" widget="mail_followers"/>
+                <field name="activity_ids" widget="mail_activity"/>
+                <field name="message_ids" widget="mail_thread"/>
+            </div>
+        </form>
+    </field>
+</record>
 
-
+    <!-- Tree views -->
     <record id="view_student_tree" model="ir.ui.view">
         <field name="name">student.management.tree</field>
         <field name="model">student.management</field>
@@ -38,6 +85,7 @@
         </field>
     </record>
 
+    <!-- Search Views -->
     <record id="view_student_search" model="ir.ui.view">
         <field name="name">student.management.search</field>
         <field name="model">student.management</field>
@@ -55,23 +103,119 @@
         </field>
     </record>
 
+    <!-- Kanban Views -->
+    <record id="student_management_kanban_view" model="ir.ui.view">
+        <field name="name">student.management.kanban</field>
+        <field name="model">student.management</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="gender">
+                <field name="name"/>
+                <field name="gender"/>
+                <field name="age"/>
+                <field name="address"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="oe_kanban_details">
+                                <strong class="o_kanban_record_title">
+                                    <field name="name"/>
+                                </strong>
+                                <div class="o_kanban_record_top">
+                                    <field name="sequence"/> - <field name="age"/> years old
+                                </div>
+                                <div class="o_kanban_record_content">
+                                    <field name="address"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Pivot Views -->
+    <record id="student_management_pivot_view" model="ir.ui.view">
+        <field name="name">student.management.pivot</field>
+        <field name="model">student.management</field>
+        <field name="arch" type="xml">
+            <pivot>
+                <field name="name" type="row"/>
+                <field name="gender" type="row"/>
+                <field name="age" type="measure"/>
+
+            </pivot>
+        </field>
+    </record>
+
+    <!-- Graph Views-->
+    <record id="student_management_graph_view" model="ir.ui.view">
+        <field name="name">student.management.graph</field>
+        <field name="model">student.management</field>
+        <field name="arch" type="xml">
+            <graph>
+                <field name="name"/>
+                <field name="age" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Calendar Views -->
+    <record id="student_management_calendar_view" model="ir.ui.view">
+        <field name="name">student.management.calendar</field>
+        <field name="model">student.management</field>
+        <field name="arch" type="xml">
+            <calendar date_start="birthdate" string="Students" mode="month" event_open_popup="true" quick_add="false">
+                <field name="name"/>
+                <field name="birthdate"/>
+                <field name="gender"/>
+            </calendar>
+        </field>
+    </record>
+
+
     
     <record id="action_student" model="ir.actions.act_window">
         <field name="name">Students</field>
         <field name="res_model">student.management</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">kanban,pivot,graph,calendar,tree,form</field>
+            <field name="view_id" ref="student_management_kanban_view"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a Property to Advertise
+                </p>
+            </field>
     </record>
 
-  
-    <menuitem id="menu_student_management" name="Student Management" sequence="10" parent="base.menu_custom"/>
-    <menuitem id="menu_student" parent="menu_student_management" action="action_student" name="Students" sequence="10"/>
-
-   
-    <record id="student_id_card_report" model="ir.actions.report">
-        <field name="name">Student ID Card</field>
-        <field name="model">student.management</field>
-        <field name="report_type">qweb-pdf</field>
-        <field name="report_name">student_management.student_id_card_template</field>
-        <field name="report_file">student_management.student_id_card_template</field>
+    <!-- clent Action -->
+    <record id="action_custom_student_client_action" model="ir.actions.client">
+        <field name="name">Custom Student Client Action</field>
+        <field name="tag">custom_student_client_action</field>
     </record>
+
+    <!-- Server Action -->
+    <record id="action_update_student_age" model="ir.actions.server">
+        <field name="name">Update Student Age</field>
+        <field name="model_id" ref="student_record.model_student_management"/>
+        <field name="state">code</field>
+        <field name="binding_model_id" ref="student_record.model_student_management"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="code">
+            action = model._compute_age()
+        </field>
+    </record>
+
+    <!-- Scheduled Action -->
+    <record id="ir_cron_update_student_age" model="ir.cron">
+        <field name="name">Student: Update Age Everyday</field>
+        <field name="model_id" ref="student_record.model_student_management"/>
+        <field name="state">code</field>
+        <field name="code">model._compute_age()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <!-- <field name="doall" eval="False"/> -->
+    </record>
+
+    
 </odoo>

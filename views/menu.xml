@@ -1,0 +1,18 @@
+<odoo>
+    <menuitem id="menu_root_student_management" name="Student Management"/>
+    
+    <menuitem id="menu_student_records" name="Student Records" parent="menu_root_student_management">
+        <menuitem id="menu_students" name="Students" action="action_student"/>
+    </menuitem>
+    
+    
+    <menuitem id="menu_student_setting" name="Setting" parent="menu_root_student_management">
+        <menuitem id="menu_student_reports" name="Reports">
+            <menuitem id="menu_student_record_history" name="Student Record History" action="student_record.action_student_record_history"/>
+          
+        </menuitem>
+    </menuitem>
+
+
+
+</odoo>

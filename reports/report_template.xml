@@ -1,0 +1,49 @@
+<odoo>
+    <data>
+        <template id="student_id_card_document">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <h2>Student ID Card</h2>
+
+                    <div id="student_information" class="row mt-4 mb-4">
+                        <div class="col-auto col-4">
+                            <strong>Name:</strong>
+                            <p class="m-0" t-field="o.name"/>
+                        </div>
+                        <div class="col-auto col-4">
+                            <strong>Student Number:</strong>
+                            <p class="m-0" t-field="o.sequence"/>
+                        </div>
+                        <div class="col-auto col-4">
+                            <strong>Birthdate:</strong>
+                            <p class="m-0" t-field="o.birthdate"/>
+                        </div>
+                    </div>
+
+                    <div id="additional_information" class="row mt-4 mb-4">
+                        <div class="col-auto col-4">
+                            <strong>Age:</strong>
+                            <p class="m-0" t-field="o.age"/>
+                        </div>
+                        <div class="col-auto col-4">
+                            <strong>Gender:</strong>
+                            <p class="m-0" t-field="o.gender"/>
+                        </div>
+                        <div class="col-auto col-4">
+                            <strong>Address:</strong>
+                            <p class="m-0" t-field="o.address"/>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <template id="report_student_id_card">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="student_record.student_id_card_document"/>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>
